@@ -73,6 +73,7 @@ class _CustomDialogState extends State<CustomDialog> {
             children: [
               TextField(
                 controller: textController,
+
               ),
               SizedBox(
                 height: 35,
@@ -82,6 +83,7 @@ class _CustomDialogState extends State<CustomDialog> {
                   setState(
                     () {
                       entries.add(textController.text);
+                      textController.clear();
                     },
                   );
                 },
@@ -98,7 +100,36 @@ class _CustomDialogState extends State<CustomDialog> {
                 height: 15,
               ),
               ...entries.map(
-                (e) => Text(e),
+                (e) => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(e),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            entries.remove(e);
+                          });
+                        },
+                        child: Icon(Icons.delete)),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            textController.text = entries[0];
+                            entries.remove(e);
+                          }
+                          );
+                        },
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.red,
+                          size: 24,
+                        )),
+                  ],
+                ),
               ),
               Align(
                 child: FlatButton(
